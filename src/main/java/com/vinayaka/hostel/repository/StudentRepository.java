@@ -13,4 +13,5 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     List<Student> findByGender(String gender);
     List<Student> findByStatus(Student.StudentStatus status);
     List<Student> findByGenderAndStatus(String gender, Student.StudentStatus status);
+    Optional<Student> findByHostelId(String hostelId);
 }

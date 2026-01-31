@@ -31,6 +31,16 @@ public class AdminController {
             return ResponseEntity.badRequest().build();
         }
     }
+    
+    @DeleteMapping("/student/{id}")
+    public ResponseEntity<?> deleteStudent(@PathVariable Long id) {
+        try {
+            studentService.deleteStudent(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
     @GetMapping("/students")
     public ResponseEntity<List<Student>> getStudents(
@@ -43,6 +53,13 @@ public class AdminController {
             return ResponseEntity.ok(studentService.getStudentsByGender(gender));
         }
         return ResponseEntity.ok(studentService.getAllStudents());
+    }
+
+    @GetMapping("/student/search/hostel-id")
+    public ResponseEntity<Student> searchStudentByHostelId(@RequestParam String hostelId) {
+        return studentService.getStudentByHostelId(hostelId)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/permissions")
@@ -139,6 +156,48 @@ public class AdminController {
                     latestPerm
             );
             return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @PostMapping("/allocate-room")
+    public ResponseEntity<?> allocateRoom(@RequestBody AllocationRequest request) {
+        try {
+            Student student = studentService.assignRoom(
+                request.getPin(), 
+                request.getHostelId(), 
+                request.getBlock(), 
+                request.getRoomNo()
+            );
+            return ResponseEntity.ok(student);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    // DTO for Allocation
+    public static class AllocationRequest {
+        private String pin;
+        private String hostelId;
+        private String block;
+        private String roomNo;
+        
+        // Getters and Setters
+        public String getPin() { return pin; }
+        public void setPin(String pin) { this.pin = pin; }
+        public String getHostelId() { return hostelId; }
+        public void setHostelId(String hostelId) { this.hostelId = hostelId; }
+        public String getBlock() { return block; }
+        public void setBlock(String block) { this.block = block; }
+        public String getRoomNo() { return roomNo; }
+        public void setRoomNo(String roomNo) { this.roomNo = roomNo; }
+    }
+
+    @PostMapping("/vacate-room")
+    public ResponseEntity<?> vacateRoom(@RequestParam String collegePin) {
+        try {
+            Student student = studentService.vacateRoom(collegePin);
+            return ResponseEntity.ok(student);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

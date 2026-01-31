@@ -15,4 +15,6 @@ public interface WebPermissionRepository extends JpaRepository<WebPermission, Lo
     
     // Find all permissions acting as history log
     List<WebPermission> findAllByOrderByRequestDateDesc();
+    
+    void deleteByStudentId(Long studentId);
 }

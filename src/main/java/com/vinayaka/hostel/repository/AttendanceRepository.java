@@ -22,4 +22,6 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
     List<Object[]> findAttendanceSummary();
     @Query("SELECT a FROM Attendance a WHERE a.student.collegePin = :pin ORDER BY a.date DESC")
     List<Attendance> findByStudentCollegePin(@Param("pin") String pin);
+    
+    void deleteByStudentCollegePin(String pin);
 }

@@ -9,5 +9,8 @@ import java.util.List;
 @Repository
 public interface ScanLogRepository extends JpaRepository<ScanLog, Long> {
     List<ScanLog> findByStudentId(Long studentId);
+
     List<ScanLog> findByAdminId(Long adminId);
+    
+    void deleteByStudentId(Long studentId);
 }

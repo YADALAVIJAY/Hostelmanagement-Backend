@@ -28,7 +28,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequest authRequest) {
         try {
-            Authentication authentication = authenticationManager.authenticate(
+            authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
             );
 
@@ -43,8 +43,7 @@ public class AuthController {
             
             // Re-fetch user to get ID and Name
             // This is slightly inefficient but safe
-            Long userId = 0L;
-            String name = "";
+
             // We can infer type from Role
             // logic to find user ID based on username/role
             // Skipping detailed ID fetch logic in this snippet for brevity, 

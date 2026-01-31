@@ -20,7 +20,7 @@ public class AttendanceController {
     @GetMapping
     public ResponseEntity<List<Attendance>> getAttendance(
             @RequestParam("date") String dateStr,
-            @RequestParam("gender") String gender) {
+            @RequestParam String gender) {
         try {
             LocalDate date = LocalDate.parse(dateStr);
             return ResponseEntity.ok(attendanceService.getAttendanceSheet(date, gender));

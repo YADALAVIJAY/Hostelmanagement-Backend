@@ -24,7 +24,12 @@ public class Student {
     private String currentYear;
     private String hostelId;
     private String gender; // MALE, FEMALE
+    private String mobileNumber;
     private String parentMobileNumber;
+    
+    // Room Details
+    private String block;
+    private String roomNo;
 
     // Address
     private String village;
@@ -79,8 +84,17 @@ public class Student {
     public String getGender() { return gender; }
     public void setGender(String gender) { this.gender = gender; }
 
+    public String getMobileNumber() { return mobileNumber; }
+    public void setMobileNumber(String mobileNumber) { this.mobileNumber = mobileNumber; }
+
     public String getParentMobileNumber() { return parentMobileNumber; }
     public void setParentMobileNumber(String parentMobileNumber) { this.parentMobileNumber = parentMobileNumber; }
+
+    public String getBlock() { return block; }
+    public void setBlock(String block) { this.block = block; }
+
+    public String getRoomNo() { return roomNo; }
+    public void setRoomNo(String roomNo) { this.roomNo = roomNo; }
 
     public String getVillage() { return village; }
     public void setVillage(String village) { this.village = village; }
