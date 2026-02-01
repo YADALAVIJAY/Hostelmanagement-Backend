@@ -13,6 +13,9 @@ public class Student {
     @Column(nullable = false)
     private String name;
 
+    @Column(unique = true, nullable = true) // Nullable for existing records, or handle migration
+    private String email;
+
     @Column(unique = true, nullable = false)
     private String collegePin;
 
@@ -62,6 +65,9 @@ public class Student {
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
     public String getCollegePin() { return collegePin; }
     public void setCollegePin(String collegePin) { this.collegePin = collegePin; }

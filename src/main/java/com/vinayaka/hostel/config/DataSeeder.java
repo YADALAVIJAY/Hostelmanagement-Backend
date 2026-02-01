@@ -16,6 +16,7 @@ public class DataSeeder {
             if (adminRepository.count() == 0) {
                 Admin admin = new Admin();
                 admin.setUsername("admin");
+                admin.setEmail("admin@example.com"); // Default email for testing
                 admin.setPassword(passwordEncoder.encode("admin123"));
                 adminRepository.save(admin);
                 System.out.println("Default Admin created: admin / admin123");
