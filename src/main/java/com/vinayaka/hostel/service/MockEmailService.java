@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class MockEmailService implements EmailService {
 
-
     @org.springframework.beans.factory.annotation.Value("${app.frontend.url}")
     private String frontendUrl;
 
@@ -25,4 +24,7 @@ public class MockEmailService implements EmailService {
         System.out.println("MOCK EMAIL SERVICE (Generic)");
         System.out.println("To: " + to);
         System.out.println("Subject: " + subject);
-        System.out.prin
+        System.out.println("Body: " + body);
+        System.out.println("=================================================");
+    }
+}
