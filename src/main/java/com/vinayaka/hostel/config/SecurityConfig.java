@@ -19,6 +19,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -35,6 +36,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
+                        // Allow access to auth endpoints and error pages
                         .requestMatchers("/api/auth/**", "/error").permitAll()
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/student/**").hasAnyRole("STUDENT", "ADMIN")
@@ -66,19 +68,28 @@ public class SecurityConfig {
     }
 
     @Bean
-    CorsFilter corsFilter() {
-        return new CorsFilter(corsConfigurationSource());
-    }
-
-    @Bean
     UrlBasedCorsConfigurationSource corsConfigurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
+
         config.setAllowCredentials(true);
-        // In production, replace this with your actual domain, e.g., "https://my-hostel-app.com"
-        config.setAllowedOrigins(java.util.Arrays.asList("http://localhost:4200")); 
-        config.setAllowedHeaders(java.util.Arrays.asList("Origin", "Content-Type", "Accept", "Authorization"));
-        config.setAllowedMethods(java.util.Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        
+        // Explicitly allow the deployed frontend URL
+        config.setAllowedOriginPatterns(java.util.Arrays.asList(
+            "https://hostelmanagement-frontend1.onrender.com",
+            "http://localhost:4200",
+            "*" // Keep wildcard as fallback for now
+        ));
+        
+        config.setAllowedHeaders(java.util.Arrays.asList(
+            "Origin", "Content-Type", "Accept", "Authorization",
+            "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials"
+        ));
+        
+        config.setAllowedMethods(java.util.Arrays.asList(
+            "GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "PATCH"
+        ));
+        
         source.registerCorsConfiguration("/**", config);
         return source;
     }
