@@ -11,7 +11,7 @@ public class WebConfig implements WebMvcConfigurer {
         // ⚠️ REPLACE THIS with your specific deployed Frontend URL
         // Example: "https://my-hostel-app.vercel.app"
         // NOTE: Do not add a trailing slash '/' at the end of the URL
-        String myFrontendUrl = "https://YOUR-FRONTEND-APP.vercel.app";
+        String myFrontendUrl = "https://hostelmanagement-frontend1.onrender.com";
         registry.addMapping("/**")
                 .allowedOrigins(myFrontendUrl) 
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
