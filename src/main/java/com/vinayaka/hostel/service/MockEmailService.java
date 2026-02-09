@@ -15,7 +15,7 @@ public class MockEmailService implements EmailService {
         System.out.println("MOCK EMAIL SERVICE");
         System.out.println("To: " + to);
         System.out.println("Subject: Password Reset Request");
-        System.out.println("Body: Click the link to reset your password: " + frontendUrl + "/reset-password?token=" + token);
+        System.out.println("Body: Click the link to reset your password: " + https://hostelmanagement-frontend1.onrender.com + "/reset-password?token=" + token);
         System.out.println("=================================================");
     }
 
