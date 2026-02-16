@@ -76,8 +76,8 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
         // In production, replace this with your actual domain, e.g., "https://my-hostel-app.com"
-        config.setAllowedOrigins(java.util.Arrays.asList("http://localhost:4200")); 
-        config.setAllowedHeaders(java.util.Arrays.asList("Origin", "Content-Type", "Accept", "Authorization"));
+        config.setAllowedOrigins(java.util.Arrays.asList("*")); // Allow all for troubleshooting
+        config.setAllowedHeaders(java.util.Arrays.asList("*"));
         config.setAllowedMethods(java.util.Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         source.registerCorsConfiguration("/**", config);
         return source;
