@@ -11,7 +11,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/attendance")
-@CrossOrigin(origins = "*") // Allow frontend access
 public class AttendanceController {
 
     @Autowired

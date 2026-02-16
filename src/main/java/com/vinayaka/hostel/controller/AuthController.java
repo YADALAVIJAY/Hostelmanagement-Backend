@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "*") // Explicitly allow CORS for auth endpoints
 public class AuthController {
 
     @Autowired

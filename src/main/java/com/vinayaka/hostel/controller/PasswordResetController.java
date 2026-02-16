@@ -9,7 +9,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "*") // Adjust as needed for production
 public class PasswordResetController {
 
     @Autowired

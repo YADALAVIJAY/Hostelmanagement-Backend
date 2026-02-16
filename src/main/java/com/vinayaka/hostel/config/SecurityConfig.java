@@ -65,10 +65,7 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    CorsFilter corsFilter() {
-        return new CorsFilter(corsConfigurationSource());
-    }
+
 
     @Bean
     UrlBasedCorsConfigurationSource corsConfigurationSource() {
