@@ -18,7 +18,7 @@ public class AttendanceController {
     private AttendanceService attendanceService;
 
     @GetMapping
-    public ResponseEntity<List<Attendance>> getAttendance(
+    public ResponseEntity<List<com.vinayaka.hostel.dto.AttendanceDTO>> getAttendance(
             @RequestParam("date") String dateStr,
             @RequestParam String gender) {
         try {
@@ -30,11 +30,12 @@ public class AttendanceController {
     }
 
     @PostMapping
-    public ResponseEntity<List<Attendance>> saveAttendance(@RequestBody List<Attendance> attendanceList) {
+    public ResponseEntity<?> saveAttendance(@RequestBody List<com.vinayaka.hostel.dto.AttendanceDTO> attendanceList) {
         try {
-            return ResponseEntity.ok(attendanceService.saveAttendance(attendanceList));
+            attendanceService.saveAttendance(attendanceList);
+            return ResponseEntity.ok().build();
         } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
