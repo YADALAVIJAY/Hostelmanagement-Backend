@@ -75,8 +75,8 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        // In production, replace this with your actual domain, e.g., "https://my-hostel-app.com"
-        config.setAllowedOrigins(java.util.Arrays.asList("*")); // Allow all for troubleshooting
+        // In production, replace this with your actual domain
+        config.setAllowedOriginPatterns(java.util.Arrays.asList("*")); // Safe wildcard for credentials
         config.setAllowedHeaders(java.util.Arrays.asList("*"));
         config.setAllowedMethods(java.util.Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         source.registerCorsConfiguration("/**", config);
