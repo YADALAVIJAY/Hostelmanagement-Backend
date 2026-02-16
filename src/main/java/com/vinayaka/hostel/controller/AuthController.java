@@ -57,52 +57,5 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/forgot-password")
-    public ResponseEntity<?> forgotPassword(@RequestBody java.util.Map<String, String> request) {
-        String email = request.get("email");
-        if (email == null || email.isEmpty()) {
-            return ResponseEntity.badRequest().body("Email is required");
-        }
 
-        try {
-            com.vinayaka.hostel.entity.Student student = null;
-            try {
-                student = studentRepository.findByEmail(email).orElse(null);
-            } catch (org.springframework.dao.IncorrectResultSizeDataAccessException e) {
-                // Handle duplicate emails (hackathon fix: pick one or show error)
-                return ResponseEntity.status(500).body("Error: Multiple accounts found with this email. Please contact admin.");
-            }
-
-            if (student != null) {
-                String token = java.util.UUID.randomUUID().toString();
-                // In a real app, save token with expiry
-                // Send reset link using EmailService interface
-                emailService.sendResetLink(email, token);
-                // HACK: Return token in response for testing since user can't see server logs
-                return ResponseEntity.ok(java.util.Map.of(
-                    "message", "Password reset link generated (Check logs or use debug token below).",
-                    "debug_token", token,
-                    "debug_link", frontendUrl + "/reset-password?token=" + token
-                ));
-            }
-
-            // Check Admin
-            com.vinayaka.hostel.entity.Admin admin = adminRepository.findByEmail(email).orElse(null);
-            if (admin != null) {
-                String token = java.util.UUID.randomUUID().toString();
-                emailService.sendResetLink(email, token);
-                return ResponseEntity.ok(java.util.Map.of(
-                    "message", "Password reset link generated.",
-                    "debug_token", token,
-                    "debug_link", frontendUrl + "/reset-password?token=" + token
-                ));
-            }
-
-            return ResponseEntity.status(404).body("Email not found");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(500).body("Internal Server Error: " + e.getMessage());
-        }
-    }
 }

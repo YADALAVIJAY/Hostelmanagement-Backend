@@ -32,8 +32,11 @@ public class PasswordResetService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @org.springframework.beans.factory.annotation.Value("${app.frontend.url}")
+    private String frontendUrl;
+
     @Transactional
-    public void processForgotPassword(String email) {
+    public String processForgotPassword(String email) {
         Optional<Student> studentOpt = studentRepository.findByEmail(email);
         Optional<Admin> adminOpt = adminRepository.findByEmail(email);
 
@@ -49,10 +52,11 @@ public class PasswordResetService {
             createTokenForAdmin(adminOpt.get(), token);
         }
 
-        String resetLink = "http://localhost:4200/reset-password?token=" + token; // Adjust URL as needed
+        String resetLink = frontendUrl + "/reset-password?token=" + token;
         String message = "Click the link to reset your password: " + resetLink;
         
         emailService.sendEmail(email, "Password Reset Request", message);
+        return token;
     }
 
     private void createTokenForStudent(Student student, String token) {

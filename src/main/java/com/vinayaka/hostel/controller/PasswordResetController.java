@@ -15,6 +15,9 @@ public class PasswordResetController {
     @Autowired
     private PasswordResetService passwordResetService;
 
+    @org.springframework.beans.factory.annotation.Value("${app.frontend.url}")
+    private String frontendUrl;
+
     @PostMapping("/forgot-password")
     public ResponseEntity<?> forgotPassword(@RequestBody Map<String, String> request) {
         try {
@@ -22,8 +25,14 @@ public class PasswordResetController {
             if (email == null || email.isEmpty()) {
                 return ResponseEntity.badRequest().body("Email is required");
             }
-            passwordResetService.processForgotPassword(email);
-            return ResponseEntity.ok("Password reset link sent to your email");
+            String token = passwordResetService.processForgotPassword(email);
+            
+            // HACK: Return token in response for testing since user can't see server logs
+            return ResponseEntity.ok(java.util.Map.of(
+                "message", "Password reset link generated (Check logs or use debug token below).",
+                "debug_token", token,
+                "debug_link", frontendUrl + "/reset-password?token=" + token
+            ));
         } catch (RuntimeException e) {
             return ResponseEntity.status(404).body(e.getMessage()); // Or 400 based on error
         } catch (Exception e) {
