@@ -30,6 +30,13 @@ public class EmailService {
         }
     }
 
+    public void sendResetLink(String to, String token) {
+        String subject = "Password Reset Request";
+        String link = "https://hostelmanagement-frontend1.onrender.com/reset-password?token=" + token; // Fallback link
+        String body = "Click the link to reset your password: " + link;
+        sendEmail(to, subject, body);
+    }
+
     private void fallbackLog(String to, String subject, String body) {
         System.out.println("--- EMAIL FALLBACK LOG ---");
         System.out.println("To: " + to);
